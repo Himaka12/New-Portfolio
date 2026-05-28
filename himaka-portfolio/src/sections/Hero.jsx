@@ -121,37 +121,33 @@ function Hero() {
   }
 
   const ctx = gsap.context(() => {
-    // Initial state
     gsap.set(heroBg, {
       scale: 1,
       x: 0,
       y: 0,
       opacity: 1,
-      transformOrigin: '58% 50%',
+      transformOrigin: '58% 42%',
       force3D: true,
     })
 
     gsap.set(heroMain, {
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)',
     })
 
     gsap.set(heroAside, {
       opacity: 1,
       x: 0,
-      filter: 'blur(0px)',
     })
 
     gsap.set(overlay, {
       opacity: 0,
-      y: 90,
-      filter: 'blur(0px)',
+      y: 160,
     })
 
     gsap.set([overlayLeft, overlayText], {
       opacity: 0,
-      y: 80,
+      y: 120,
     })
 
     const timeline = gsap.timeline({
@@ -162,32 +158,32 @@ function Hero() {
         trigger: heroSection,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1.8,
+        scrub: 2.2,
         invalidateOnRefresh: true,
       },
     })
 
     timeline
-      // 1. First scroll: only slow zoom, no upward movement
+      // 1. First scroll: only slow zoom. No upward movement.
       .to(
         heroBg,
         {
-          scale: 1.08,
+          scale: 1.06,
           x: 0,
           y: 0,
           opacity: 1,
-          duration: 2.2,
+          duration: 2,
         },
         0
       )
 
-      // 2. Keep landing text visible for longer
+      // 2. Keep landing text visible longer
       .to(
         heroMain,
         {
           opacity: 1,
           y: 0,
-          duration: 1.2,
+          duration: 1.4,
         },
         0
       )
@@ -197,57 +193,54 @@ function Hero() {
         {
           opacity: 1,
           x: 0,
-          duration: 1.2,
+          duration: 1.4,
         },
         0
       )
 
-      // 3. After some scroll, landing text fades slowly
+      // 3. Landing text fades slowly
       .to(
         heroMain,
         {
           opacity: 0,
-          y: -55,
-          filter: 'blur(2px)',
-          duration: 1.6,
+          y: -45,
+          duration: 1.8,
         },
-        1.45
+        1.8
       )
 
       .to(
         heroAside,
         {
           opacity: 0,
-          x: 45,
-          filter: 'blur(2px)',
-          duration: 1.6,
+          x: 35,
+          duration: 1.8,
         },
-        1.55
+        1.9
       )
 
-      // 4. Image keeps zooming but still fills screen
+      // 4. Image keeps zooming in place
       .to(
         heroBg,
         {
-          scale: 1.15,
+          scale: 1.13,
           x: 0,
           y: 0,
           opacity: 1,
-          duration: 2.5,
+          duration: 2.8,
         },
-        1.6
+        1.8
       )
 
-      // 5. Overlay section comes over the same image
+      // 5. Overlay text comes from bottom
       .to(
         overlay,
         {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
-          duration: 1.4,
+          duration: 1.8,
         },
-        2.75
+        3.3
       )
 
       .to(
@@ -255,9 +248,9 @@ function Hero() {
         {
           opacity: 1,
           y: 0,
-          duration: 1.2,
+          duration: 1.5,
         },
-        3.0
+        3.55
       )
 
       .to(
@@ -265,73 +258,60 @@ function Hero() {
         {
           opacity: 1,
           y: 0,
-          duration: 1.2,
+          duration: 1.5,
         },
-        3.15
+        3.75
       )
 
-      // 6. Image continues very slow zoom behind overlay text
+      // 6. Image still stays behind overlay text
       .to(
         heroBg,
         {
-          scale: 1.22,
+          scale: 1.2,
           x: 0,
           y: 0,
           opacity: 1,
-          duration: 2.6,
+          duration: 3,
         },
-        3.2
+        3.7
       )
 
-      // 7. Overlay text moves up slowly
+      // 7. Overlay moves slightly upward near the end
       .to(
         overlay,
         {
-          y: -90,
-          duration: 1.8,
+          y: -70,
+          duration: 2,
         },
-        4.9
+        5.7
       )
 
-      // 8. Image stays visible almost until the end
-      .to(
-        heroBg,
-        {
-          scale: 1.26,
-          x: 0,
-          y: 0,
-          opacity: 1,
-          duration: 1.4,
-        },
-        5.45
-      )
-
-      // 9. Smooth final fade only at the end
+      // 8. Final fade only at the very end
       .to(
         overlay,
         {
           opacity: 0,
-          filter: 'blur(5px)',
-          duration: 1.1,
+          duration: 1,
         },
-        6.15
+        7.1
       )
 
       .to(
         heroBg,
         {
           opacity: 0,
-          scale: 1.3,
+          scale: 1.23,
           x: 0,
           y: 0,
-          duration: 1.2,
+          duration: 1,
         },
-        6.35
+        7.3
       )
   }, heroSection)
 
   return () => ctx.revert()
 }, [])
+
 
   const shortNavLinks = [
     { label: 'Index', href: '#home', id: 'home' },
