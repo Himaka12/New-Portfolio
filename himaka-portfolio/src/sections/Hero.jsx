@@ -100,155 +100,238 @@ function Hero() {
   }, [])
 
   useEffect(() => {
-    const heroSection = heroSectionRef.current
-    const heroBg = heroBgRef.current
-    const heroMain = heroMainRef.current
-    const heroAside = heroAsideRef.current
-    const overlay = overlayRef.current
-    const overlayLeft = overlayLeftRef.current
-    const overlayText = overlayTextRef.current
+  const heroSection = heroSectionRef.current
+  const heroBg = heroBgRef.current
+  const heroMain = heroMainRef.current
+  const heroAside = heroAsideRef.current
+  const overlay = overlayRef.current
+  const overlayLeft = overlayLeftRef.current
+  const overlayText = overlayTextRef.current
 
-    if (!heroSection || !heroBg || !heroMain || !heroAside || !overlay || !overlayLeft || !overlayText) {
-      return
-    }
+  if (
+    !heroSection ||
+    !heroBg ||
+    !heroMain ||
+    !heroAside ||
+    !overlay ||
+    !overlayLeft ||
+    !overlayText
+  ) {
+    return
+  }
 
-    const ctx = gsap.context(() => {
-      gsap.set(heroBg, {
-        scale: 1,
-        y: 0,
-        opacity: 1,
-        transformOrigin: '75% 65%',
-      })
+  const ctx = gsap.context(() => {
+    // Initial state
+    gsap.set(heroBg, {
+      scale: 1,
+      x: 0,
+      y: 0,
+      opacity: 1,
+      transformOrigin: '62% 50%',
+      force3D: true,
+    })
 
-      gsap.set(overlay, {
-        opacity: 0,
-        y: 80,
-      })
+    gsap.set(heroMain, {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+    })
 
-      gsap.set([overlayLeft, overlayText], {
-        y: 80,
-        opacity: 0,
-      })
+    gsap.set(heroAside, {
+      opacity: 1,
+      x: 0,
+      filter: 'blur(0px)',
+    })
 
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroSection,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1.3,
+    gsap.set(overlay, {
+      opacity: 0,
+      y: 90,
+      filter: 'blur(0px)',
+    })
+
+    gsap.set([overlayLeft, overlayText], {
+      opacity: 0,
+      y: 80,
+    })
+
+    const timeline = gsap.timeline({
+      defaults: {
+        ease: 'none',
+      },
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: 1.8,
+        invalidateOnRefresh: true,
+      },
+    })
+
+    timeline
+      // 1. First scroll: only slow zoom, no upward movement
+      .to(
+        heroBg,
+        {
+          scale: 1.08,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 2.2,
         },
-      })
+        0
+      )
 
-      timeline
-        // Stage 1: image slowly zooms, landing text still visible
-        .to(
-          heroBg,
-          {
-            scale: 1.08,
-            y: 0,
-            ease: 'none',
-          },
-          0
-        )
+      // 2. Keep landing text visible for longer
+      .to(
+        heroMain,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+        },
+        0
+      )
 
-        // Stage 2: main hero text fades out slowly
-        .to(
-          heroMain,
-          {
-            opacity: 0,
-            y: -80,
-            ease: 'none',
-          },
-          0.34
-        )
+      .to(
+        heroAside,
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.2,
+        },
+        0
+      )
 
-        .to(
-          heroAside,
-          {
-            opacity: 0,
-            x: 50,
-            ease: 'none',
-          },
-          0.36
-        )
+      // 3. After some scroll, landing text fades slowly
+      .to(
+        heroMain,
+        {
+          opacity: 0,
+          y: -55,
+          filter: 'blur(2px)',
+          duration: 1.6,
+        },
+        1.45
+      )
 
-        // Stage 3: overlay text comes on top of the zoomed image
-        .to(
-          overlay,
-          {
-            opacity: 1,
-            y: 0,
-            ease: 'none',
-          },
-          0.52
-        )
+      .to(
+        heroAside,
+        {
+          opacity: 0,
+          x: 45,
+          filter: 'blur(2px)',
+          duration: 1.6,
+        },
+        1.55
+      )
 
-        .to(
-          overlayLeft,
-          {
-            opacity: 1,
-            y: 0,
-            ease: 'none',
-          },
-          0.58
-        )
+      // 4. Image keeps zooming but still fills screen
+      .to(
+        heroBg,
+        {
+          scale: 1.15,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 2.5,
+        },
+        1.6
+      )
 
-        .to(
-          overlayText,
-          {
-            opacity: 1,
-            y: 0,
-            ease: 'none',
-          },
-          0.62
-        )
+      // 5. Overlay section comes over the same image
+      .to(
+        overlay,
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1.4,
+        },
+        2.75
+      )
 
-        // Stage 4: image keeps zooming behind overlay text
-        .to(
-          heroBg,
-          {
-            scale: 1.22,
-            y: 0,
-            ease: 'none',
-          },
-          0.5
-        )
+      .to(
+        overlayLeft,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+        },
+        3.0
+      )
 
-        // Stage 5: overlay text starts moving up
-        .to(
-          overlay,
-          {
-            y: -160,
-            ease: 'none',
-          },
-          0.68
-        )
+      .to(
+        overlayText,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+        },
+        3.15
+      )
 
-        // Stage 6: image fades smoothly after overlay section ends
-        .to(
-          heroBg,
-          {
-            opacity: 0,
-            scale: 1.32,
-            y: 0,
-            ease: 'none',
-          },
-          0.94
-        )
+      // 6. Image continues very slow zoom behind overlay text
+      .to(
+        heroBg,
+        {
+          scale: 1.22,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 2.6,
+        },
+        3.2
+      )
 
-        .to(
-          overlay,
-          {
-            opacity: 0,
-            filter: 'blur(8px)',
-            ease: 'none',
-          },
-          0.82
-        )
-    }, heroSection)
+      // 7. Overlay text moves up slowly
+      .to(
+        overlay,
+        {
+          y: -90,
+          duration: 1.8,
+        },
+        4.9
+      )
 
-    return () => ctx.revert()
-  }, [])
+      // 8. Image stays visible almost until the end
+      .to(
+        heroBg,
+        {
+          scale: 1.26,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 1.4,
+        },
+        5.45
+      )
+
+      // 9. Smooth final fade only at the end
+      .to(
+        overlay,
+        {
+          opacity: 0,
+          filter: 'blur(5px)',
+          duration: 1.1,
+        },
+        6.15
+      )
+
+      .to(
+        heroBg,
+        {
+          opacity: 0,
+          scale: 1.3,
+          x: 0,
+          y: 0,
+          duration: 1.2,
+        },
+        6.35
+      )
+  }, heroSection)
+
+  return () => ctx.revert()
+}, [])
 
   const shortNavLinks = [
     { label: 'Index', href: '#home', id: 'home' },
