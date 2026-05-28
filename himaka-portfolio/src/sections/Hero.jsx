@@ -18,6 +18,8 @@ function getGreeting() {
 
 function Hero() {
   const greeting = getGreeting()
+  const heroStageRef = useRef(null)
+  const heroBgRef = useRef(null)
   const [isMetaScrolled, setIsMetaScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState(() => {
     if (typeof window === 'undefined') {
@@ -82,6 +84,29 @@ function Hero() {
     }
   }, [])
 
+  useEffect(() => {
+  const heroStage = heroStageRef.current
+  const heroBg = heroBgRef.current
+
+  if (!heroStage || !heroBg) return
+
+  const ctx = gsap.context(() => {
+    gsap.to(heroBg, {
+      scale: 1.28,
+      y: -35,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroStage,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.2,
+      },
+    })
+  }, heroStage)
+
+  return () => ctx.revert()
+}, [])
+
   const shortNavLinks = [
     { label: 'Index', href: '#home', id: 'home' },
     { label: 'About', href: '#about', id: 'about' },
@@ -90,9 +115,8 @@ function Hero() {
 
   return (
     <section className="section hero-section" id="home">
-      <div className="hero-stage">
-        <div className="hero-stage__bg" aria-hidden="true"></div>
-        <div className="hero-stage__texture" aria-hidden="true"></div>
+  <div ref={heroStageRef} className="hero-stage">
+    <div ref={heroBgRef} className="hero-stage__bg" aria-hidden="true"></div>
 
         <div className={`hero-stage__meta ${isMetaScrolled ? 'is-scrolled' : ''}`}>
           <p className="hero-meta-copy">{greeting}</p>
