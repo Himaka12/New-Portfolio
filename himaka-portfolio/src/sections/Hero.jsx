@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -20,15 +20,25 @@ function getGreeting() {
 
 function Hero() {
   const greeting = getGreeting()
+
+  const heroSectionRef = useRef(null)
   const heroStageRef = useRef(null)
   const heroBgRef = useRef(null)
+  const heroMainRef = useRef(null)
+  const heroAsideRef = useRef(null)
+  const overlayRef = useRef(null)
+  const overlayLeftRef = useRef(null)
+  const overlayTextRef = useRef(null)
+
   const [isMetaScrolled, setIsMetaScrolled] = useState(false)
+
   const [activeSection, setActiveSection] = useState(() => {
     if (typeof window === 'undefined') {
       return 'home'
     }
 
     const currentHash = window.location.hash.replace('#', '')
+
     return ['home', 'about', 'projects'].includes(currentHash)
       ? currentHash
       : 'home'
@@ -36,6 +46,7 @@ function Hero() {
 
   useEffect(() => {
     const sectionIds = ['home', 'about', 'projects']
+
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean)
@@ -60,6 +71,7 @@ function Hero() {
 
     const handleHashChange = () => {
       const currentHash = window.location.hash.replace('#', '')
+
       if (sectionIds.includes(currentHash)) {
         setActiveSection(currentHash)
       }
@@ -79,6 +91,7 @@ function Hero() {
     }
 
     syncScrolledState()
+
     window.addEventListener('scroll', syncScrolledState, { passive: true })
 
     return () => {
@@ -87,27 +100,157 @@ function Hero() {
   }, [])
 
   useEffect(() => {
-  const heroStage = heroStageRef.current
-  const heroBg = heroBgRef.current
+    const heroSection = heroSectionRef.current
+    const heroBg = heroBgRef.current
+    const heroMain = heroMainRef.current
+    const heroAside = heroAsideRef.current
+    const overlay = overlayRef.current
+    const overlayLeft = overlayLeftRef.current
+    const overlayText = overlayTextRef.current
 
-  if (!heroStage || !heroBg) return
+    if (!heroSection || !heroBg || !heroMain || !heroAside || !overlay || !overlayLeft || !overlayText) {
+      return
+    }
 
-  const ctx = gsap.context(() => {
-    gsap.to(heroBg, {
-      scale: 1.28,
-      y: -35,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroStage,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2,
-      },
-    })
-  }, heroStage)
+    const ctx = gsap.context(() => {
+      gsap.set(heroBg, {
+        scale: 1,
+        y: 0,
+        opacity: 1,
+        transformOrigin: '75% 100%',
+      })
 
-  return () => ctx.revert()
-}, [])
+      gsap.set(overlay, {
+        opacity: 0,
+        y: 80,
+      })
+
+      gsap.set([overlayLeft, overlayText], {
+        y: 80,
+        opacity: 0,
+      })
+
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroSection,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1.3,
+        },
+      })
+
+      timeline
+        // Stage 1: image slowly zooms, landing text still visible
+        .to(
+          heroBg,
+          {
+            scale: 1.2,
+            y: -20,
+            ease: 'none',
+          },
+          0
+        )
+
+        // Stage 2: main hero text fades out slowly
+        .to(
+          heroMain,
+          {
+            opacity: 0,
+            y: -120,
+            filter: 'blur(8px)',
+            ease: 'none',
+          },
+          0.12
+        )
+
+        .to(
+          heroAside,
+          {
+            opacity: 0,
+            x: 80,
+            filter: 'blur(6px)',
+            ease: 'none',
+          },
+          0.14
+        )
+
+        // Stage 3: overlay text comes on top of the zoomed image
+        .to(
+          overlay,
+          {
+            opacity: 1,
+            y: 0,
+            ease: 'none',
+          },
+          0.32
+        )
+
+        .to(
+          overlayLeft,
+          {
+            opacity: 1,
+            y: 0,
+            ease: 'none',
+          },
+          0.38
+        )
+
+        .to(
+          overlayText,
+          {
+            opacity: 1,
+            y: 0,
+            ease: 'none',
+          },
+          0.42
+        )
+
+        // Stage 4: image keeps zooming behind overlay text
+        .to(
+          heroBg,
+          {
+            scale: 1.38,
+            y: -70,
+            ease: 'none',
+          },
+          0.42
+        )
+
+        // Stage 5: overlay text starts moving up
+        .to(
+          overlay,
+          {
+            y: -160,
+            ease: 'none',
+          },
+          0.68
+        )
+
+        // Stage 6: image fades smoothly after overlay section ends
+        .to(
+          heroBg,
+          {
+            opacity: 0,
+            scale: 1.48,
+            y: -110,
+            ease: 'none',
+          },
+          0.78
+        )
+
+        .to(
+          overlay,
+          {
+            opacity: 0,
+            filter: 'blur(8px)',
+            ease: 'none',
+          },
+          0.82
+        )
+    }, heroSection)
+
+    return () => ctx.revert()
+  }, [])
 
   const shortNavLinks = [
     { label: 'Index', href: '#home', id: 'home' },
@@ -116,24 +259,35 @@ function Hero() {
   ]
 
   return (
-<section className="section hero-section" id="home">
-  <div ref={heroStageRef} className="hero-stage">
-    <div ref={heroBgRef} className="hero-stage__bg" aria-hidden="true"></div>
+    <section ref={heroSectionRef} className="section hero-section" id="home">
+      <div ref={heroStageRef} className="hero-stage">
+        <div ref={heroBgRef} className="hero-stage__bg" aria-hidden="true"></div>
+        <div className="hero-stage__shade" aria-hidden="true"></div>
+        <div className="hero-stage__texture" aria-hidden="true"></div>
 
         <div className={`hero-stage__meta ${isMetaScrolled ? 'is-scrolled' : ''}`}>
           <p className="hero-meta-copy">{greeting}</p>
 
           <div className="hero-socials">
             <span>Socials</span>
+
             <a href="https://github.com/Himaka12" target="_blank" rel="noopener noreferrer">
               gitHub
             </a>
+
             <span>/</span>
-            <a href="https://www.linkedin.com/in/himaka-uthpala-2262633a7" target="_blank" rel="noopener noreferrer">
+
+            <a
+              href="https://www.linkedin.com/in/himaka-uthpala-2262633a7"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               LinkedIn
             </a>
+
             <span>/</span>
-            <a href="#contact" target="_blank" rel="noopener noreferrer">
+
+            <a href="#contact">
               CV
             </a>
           </div>
@@ -151,6 +305,7 @@ function Hero() {
                   >
                     {link.label}
                   </a>
+
                   {index < shortNavLinks.length - 1 ? <span>/</span> : null}
                 </span>
               )
@@ -163,9 +318,10 @@ function Hero() {
         </div>
 
         <div className="hero-stage__body">
-          <div className="hero-content">
+          <div ref={heroMainRef} className="hero-content">
             <div className="hero-intro">
               <p>Hi there! this is</p>
+
               <h1>
                 <span className="hero-intro__primary">Himaka</span>
                 <span className="hero-intro__secondary">Uthpala</span>
@@ -181,9 +337,10 @@ function Hero() {
             <p className="hero-scroll-note">(Scroll down)</p>
           </div>
 
-          <aside className="hero-aside">
+          <aside ref={heroAsideRef} className="hero-aside">
             <div className="hero-aside__block">
               <span className="hero-aside__line"></span>
+
               <ul className="hero-service-list">
                 <li>Frontend Development</li>
                 <li>Backend Development</li>
@@ -194,19 +351,24 @@ function Hero() {
 
             <div className="hero-aside__block">
               <span className="hero-aside__line"></span>
+
               <div className="hero-help-row">
                 <a className="hero-help-link" href="#contact">
                   How can I help?
                 </a>
+
                 <span className="hero-help-arrow">&#8599;</span>
               </div>
+
               <p className="hero-copy">
-                I am an undergraduate student pursuing a degree in Information Technology specializing in Artificial Intelligence.
+                I am an undergraduate student pursuing a degree in Information Technology
+                specializing in Artificial Intelligence.
               </p>
             </div>
 
             <div className="hero-aside__block">
               <span className="hero-aside__line"></span>
+
               <div className="hero-awards-mini">
                 <span className="hero-award-mark">&#9679;</span>
                 <span className="hero-award-mark">Projects</span>
@@ -215,6 +377,40 @@ function Hero() {
               </div>
             </div>
           </aside>
+        </div>
+
+        <div ref={overlayRef} className="hero-scroll-overlay">
+          <div ref={overlayLeftRef} className="hero-overlay-clients">
+            <span className="hero-overlay-line"></span>
+            <h2>
+              Industry projects
+              <br />
+              I worked on
+            </h2>
+
+            <div className="hero-client-grid">
+              <span>Toy Gallery</span>
+              <span>AI Survey</span>
+              <span>KDD99 ML</span>
+              <span>Appointment System</span>
+            </div>
+          </div>
+
+          <div ref={overlayTextRef} className="hero-overlay-story">
+            <span className="hero-overlay-label">(Intro)</span>
+
+            <p>
+              I design and build digital products that are simple, useful, and
+              easy to understand. My work connects frontend development, backend
+              systems, database design, and AI/ML experiments.
+            </p>
+
+            <p>
+              My goal is to create portfolio projects that feel practical, modern,
+              and human-centered instead of just looking like normal university
+              assignments.
+            </p>
+          </div>
         </div>
       </div>
     </section>
