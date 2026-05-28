@@ -1,0 +1,33 @@
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 18px));
+  }
+}
+
+.marquee__track {
+  animation: marquee-scroll 22s linear infinite;
+}
+
+.project-card,
+.service-card,
+.award-card,
+.testimonial-card,
+.tech-card,
+.button {
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    background 0.35s ease;
+}
+
+.project-card:hover,
+.service-card:hover,
+.award-card:hover,
+.testimonial-card:hover,
+.tech-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 138, 30, 0.26);
+}

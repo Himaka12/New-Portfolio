@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 function getGreeting() {
   const hour = new Date().getHours()
 
@@ -14,6 +16,75 @@ function getGreeting() {
 
 function Hero() {
   const greeting = getGreeting()
+  const [isMetaScrolled, setIsMetaScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState(() => {
+    if (typeof window === 'undefined') {
+      return 'home'
+    }
+
+    const currentHash = window.location.hash.replace('#', '')
+    return ['home', 'about', 'projects'].includes(currentHash)
+      ? currentHash
+      : 'home'
+  })
+
+  useEffect(() => {
+    const sectionIds = ['home', 'about', 'projects']
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)
+
+        if (visibleEntries[0]?.target.id) {
+          setActiveSection(visibleEntries[0].target.id)
+        }
+      },
+      {
+        threshold: [0.2, 0.35, 0.5, 0.7],
+        rootMargin: '-20% 0px -35% 0px',
+      }
+    )
+
+    sections.forEach((section) => observer.observe(section))
+
+    const handleHashChange = () => {
+      const currentHash = window.location.hash.replace('#', '')
+      if (sectionIds.includes(currentHash)) {
+        setActiveSection(currentHash)
+      }
+    }
+
+    window.addEventListener('hashchange', handleHashChange)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  }, [])
+
+  useEffect(() => {
+    const syncScrolledState = () => {
+      setIsMetaScrolled(window.scrollY > 24)
+    }
+
+    syncScrolledState()
+    window.addEventListener('scroll', syncScrolledState, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', syncScrolledState)
+    }
+  }, [])
+
+  const shortNavLinks = [
+    { label: 'Index', href: '#home', id: 'home' },
+    { label: 'About', href: '#about', id: 'about' },
+    { label: 'Projects', href: '#projects', id: 'projects' },
+  ]
 
   return (
     <section className="section hero-section" id="home">
@@ -21,24 +92,41 @@ function Hero() {
         <div className="hero-stage__bg" aria-hidden="true"></div>
         <div className="hero-stage__texture" aria-hidden="true"></div>
 
-        <div className="hero-stage__meta">
+        <div className={`hero-stage__meta ${isMetaScrolled ? 'is-scrolled' : ''}`}>
           <p className="hero-meta-copy">{greeting}</p>
 
           <div className="hero-socials">
             <span>Socials</span>
-            <a href="#contact">gh</a>
+            <a href="https://github.com/Himaka12" target="_blank" rel="noopener noreferrer">
+              gitHub
+            </a>
             <span>/</span>
-            <a href="#contact">li</a>
+            <a href="https://www.linkedin.com/in/himaka-uthpala-2262633a7" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
             <span>/</span>
-            <a href="#contact">cv</a>
+            <a href="#contact" target="_blank" rel="noopener noreferrer">
+              CV
+            </a>
           </div>
 
           <div className="hero-short-nav">
-            <a href="#home">Index</a>
-            <span>/</span>
-            <a href="#about">About</a>
-            <span>/</span>
-            <a href="#projects">Projects</a>
+            {shortNavLinks.map((link, index) => {
+              const isActive = activeSection === link.id
+
+              return (
+                <span className="hero-short-nav__item" key={link.id}>
+                  <a
+                    href={link.href}
+                    className={isActive ? 'is-active' : ''}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {link.label}
+                  </a>
+                  {index < shortNavLinks.length - 1 ? <span>/</span> : null}
+                </span>
+              )
+            })}
           </div>
 
           <a className="hero-top-cta" href="#contact">
@@ -52,14 +140,14 @@ function Hero() {
               <p>Hi there! this is</p>
               <h1>
                 <span className="hero-intro__primary">Himaka</span>
-                <span className="hero-intro__secondary">Full Stack Developer</span>
+                <span className="hero-intro__secondary">Uthpala</span>
               </h1>
             </div>
 
             <div className="hero-headline">
-              <strong>SMART</strong>
-              <strong>WEB APPLICATIONS</strong>
-              <strong className="hero-headline__accent">AI / ML</strong>
+              <strong>DESIGN</strong>
+              <strong>FOR FINANCE</strong>
+              <strong className="hero-headline__accent">FINTECH</strong>
             </div>
 
             <p className="hero-scroll-note">(Scroll down)</p>
@@ -85,9 +173,7 @@ function Hero() {
                 <span className="hero-help-arrow">&#8599;</span>
               </div>
               <p className="hero-copy">
-                I build smart web applications using React, Node.js, MongoDB,
-                and AI / ML with a focus on thoughtful structure, premium UI,
-                and practical problem solving.
+                I am an undergraduate student pursuing a degree in Information Technology specializing in Artificial Intelligence.
               </p>
             </div>
 
