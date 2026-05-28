@@ -144,8 +144,8 @@ function Hero() {
         .to(
           heroBg,
           {
-            scale: 1.2,
-            y: -20,
+            scale: 1.08,
+            y: 0,
             ease: 'none',
           },
           0
@@ -156,22 +156,20 @@ function Hero() {
           heroMain,
           {
             opacity: 0,
-            y: -120,
-            filter: 'blur(8px)',
+            y: -80,
             ease: 'none',
           },
-          0.12
+          0.34
         )
 
         .to(
           heroAside,
           {
             opacity: 0,
-            x: 80,
-            filter: 'blur(6px)',
+            x: 50,
             ease: 'none',
           },
-          0.14
+          0.36
         )
 
         // Stage 3: overlay text comes on top of the zoomed image
@@ -182,7 +180,7 @@ function Hero() {
             y: 0,
             ease: 'none',
           },
-          0.32
+          0.52
         )
 
         .to(
@@ -192,7 +190,7 @@ function Hero() {
             y: 0,
             ease: 'none',
           },
-          0.38
+          0.58
         )
 
         .to(
@@ -202,18 +200,18 @@ function Hero() {
             y: 0,
             ease: 'none',
           },
-          0.42
+          0.62
         )
 
         // Stage 4: image keeps zooming behind overlay text
         .to(
           heroBg,
           {
-            scale: 1.38,
-            y: -70,
+            scale: 1.22,
+            y: 0,
             ease: 'none',
           },
-          0.42
+          0.5
         )
 
         // Stage 5: overlay text starts moving up
@@ -231,11 +229,11 @@ function Hero() {
           heroBg,
           {
             opacity: 0,
-            scale: 1.48,
-            y: -110,
+            scale: 1.32,
+            y: 0,
             ease: 'none',
           },
-          0.78
+          0.94
         )
 
         .to(

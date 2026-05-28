@@ -334,7 +334,7 @@ button {
 }
 
 .hero-section {
-  min-height: 280vh;
+  min-height: 430vh;
   padding: 0;
   background: #000000;
 }
@@ -352,12 +352,13 @@ button {
 
 .hero-stage__bg {
   position: absolute;
-  inset: -6vw;
+  inset: -8vw -8vw -14vh -8vw;
   z-index: 0;
+  opacity: 1;
   background-image: url('/images/My-Portfolio.png');
   background-repeat: no-repeat;
   background-position: 75% 100%;
-  background-size: auto 90%;
+  background-size: auto 94%;
   pointer-events: none;
   transform: scale(1);
   transform-origin: 75% 100%;
