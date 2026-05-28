@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
+
 function getGreeting() {
   const hour = new Date().getHours()
 
@@ -114,7 +116,7 @@ function Hero() {
   ]
 
   return (
-    <section className="section hero-section" id="home">
+<section className="section hero-section" id="home">
   <div ref={heroStageRef} className="hero-stage">
     <div ref={heroBgRef} className="hero-stage__bg" aria-hidden="true"></div>
 
