@@ -99,8 +99,9 @@ function Hero() {
     }
   }, [])
 
-  useEffect(() => {
+useEffect(() => {
   const heroSection = heroSectionRef.current
+  const heroStage = heroStageRef.current
   const heroBg = heroBgRef.current
   const heroMain = heroMainRef.current
   const heroAside = heroAsideRef.current
@@ -110,6 +111,7 @@ function Hero() {
 
   if (
     !heroSection ||
+    !heroStage ||
     !heroBg ||
     !heroMain ||
     !heroAside ||
@@ -126,28 +128,31 @@ function Hero() {
       x: 0,
       y: 0,
       opacity: 1,
-      transformOrigin: '58% 42%',
+      transformOrigin: '50% 50%',
       force3D: true,
     })
 
     gsap.set(heroMain, {
       opacity: 1,
       y: 0,
+      filter: 'blur(0px)',
     })
 
     gsap.set(heroAside, {
       opacity: 1,
       x: 0,
+      filter: 'blur(0px)',
     })
 
     gsap.set(overlay, {
       opacity: 0,
-      y: 160,
+      y: 180,
+      filter: 'blur(0px)',
     })
 
     gsap.set([overlayLeft, overlayText], {
       opacity: 0,
-      y: 120,
+      y: 140,
     })
 
     const timeline = gsap.timeline({
@@ -157,18 +162,21 @@ function Hero() {
       scrollTrigger: {
         trigger: heroSection,
         start: 'top top',
-        end: 'bottom bottom',
-        scrub: 2.2,
+        end: '+=4200',
+        scrub: 1.8,
+        pin: heroStage,
+        pinSpacing: true,
+        anticipatePin: 1,
         invalidateOnRefresh: true,
       },
     })
 
     timeline
-      // 1. First scroll: only slow zoom. No upward movement.
+      // Stage 1: image zooms slowly, but it does not move up
       .to(
         heroBg,
         {
-          scale: 1.06,
+          scale: 1.08,
           x: 0,
           y: 0,
           opacity: 1,
@@ -177,7 +185,7 @@ function Hero() {
         0
       )
 
-      // 2. Keep landing text visible longer
+      // Stage 2: landing text stays visible first
       .to(
         heroMain,
         {
@@ -198,15 +206,16 @@ function Hero() {
         0
       )
 
-      // 3. Landing text fades slowly
+      // Stage 3: landing text fades slowly
       .to(
         heroMain,
         {
           opacity: 0,
           y: -45,
-          duration: 1.8,
+          filter: 'blur(2px)',
+          duration: 1.5,
         },
-        1.8
+        1.5
       )
 
       .to(
@@ -214,33 +223,21 @@ function Hero() {
         {
           opacity: 0,
           x: 35,
-          duration: 1.8,
+          filter: 'blur(2px)',
+          duration: 1.5,
         },
-        1.9
+        1.65
       )
 
-      // 4. Image keeps zooming in place
-      .to(
-        heroBg,
-        {
-          scale: 1.13,
-          x: 0,
-          y: 0,
-          opacity: 1,
-          duration: 2.8,
-        },
-        1.8
-      )
-
-      // 5. Overlay text comes from bottom
+      // Stage 4: overlay text comes from bottom
       .to(
         overlay,
         {
           opacity: 1,
           y: 0,
-          duration: 1.8,
+          duration: 1.6,
         },
-        3.3
+        2.45
       )
 
       .to(
@@ -248,9 +245,9 @@ function Hero() {
         {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: 1.4,
         },
-        3.55
+        2.7
       )
 
       .to(
@@ -258,12 +255,46 @@ function Hero() {
         {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: 1.4,
         },
-        3.75
+        2.9
       )
 
-      // 6. Image still stays behind overlay text
+      // Stage 5: image keeps zooming behind overlay text
+      .to(
+        heroBg,
+        {
+          scale: 1.18,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 3.2,
+        },
+        2.5
+      )
+
+      // Stage 6: overlay moves slightly upward
+      .to(
+        overlay,
+        {
+          y: -70,
+          duration: 1.8,
+        },
+        5.1
+      )
+
+      // Stage 7: overlay fades, image still stays visible
+      .to(
+        overlay,
+        {
+          opacity: 0,
+          filter: 'blur(4px)',
+          duration: 1,
+        },
+        6.4
+      )
+
+      // Important: keep image visible until the pin ends
       .to(
         heroBg,
         {
@@ -271,47 +302,14 @@ function Hero() {
           x: 0,
           y: 0,
           opacity: 1,
-          duration: 3,
-        },
-        3.7
-      )
-
-      // 7. Overlay moves slightly upward near the end
-      .to(
-        overlay,
-        {
-          y: -70,
-          duration: 2,
-        },
-        5.7
-      )
-
-      // 8. Final fade only at the very end
-      .to(
-        overlay,
-        {
-          opacity: 0,
           duration: 1,
         },
-        7.1
-      )
-
-      .to(
-        heroBg,
-        {
-          opacity: 0,
-          scale: 1.23,
-          x: 0,
-          y: 0,
-          duration: 1,
-        },
-        7.3
+        6.4
       )
   }, heroSection)
 
   return () => ctx.revert()
 }, [])
-
 
   const shortNavLinks = [
     { label: 'Index', href: '#home', id: 'home' },
