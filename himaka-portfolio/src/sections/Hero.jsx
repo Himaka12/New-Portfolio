@@ -117,7 +117,7 @@ function Hero() {
         scale: 1,
         y: 0,
         opacity: 1,
-        transformOrigin: '75% 100%',
+        transformOrigin: '75% 65%',
       })
 
       gsap.set(overlay, {

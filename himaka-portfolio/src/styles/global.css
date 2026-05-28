@@ -357,7 +357,7 @@ button {
   opacity: 1;
   background-image: url('/images/My-Portfolio.png');
   background-repeat: no-repeat;
-  background-position: 75% 100%;
+  background-position: 75% 220%;
   background-size: auto 94%;
   pointer-events: none;
   transform: scale(1);
