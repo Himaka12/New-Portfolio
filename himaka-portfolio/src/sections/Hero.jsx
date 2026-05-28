@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 function getGreeting() {
   const hour = new Date().getHours()
