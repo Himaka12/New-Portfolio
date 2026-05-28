@@ -221,3 +221,33 @@
     width: 100%;
   }
 }
+
+
+@media (max-width: 900px) {
+  .hero-section {
+    min-height: 260vh;
+  }
+
+  .hero-stage {
+    padding: 92px 22px 32px;
+  }
+
+  .hero-scroll-overlay {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 100px 22px 48px;
+  }
+
+  .hero-overlay-clients {
+    align-self: start;
+    padding-bottom: 0;
+  }
+
+  .hero-client-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-overlay-story p {
+    font-size: clamp(2rem, 10vw, 4rem);
+  }
+}
