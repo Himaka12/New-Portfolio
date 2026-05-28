@@ -357,11 +357,14 @@ button {
   opacity: 1;
   background-image: url('/images/My-Portfolio.png');
   background-repeat: no-repeat;
-  background-position: 62% 50%;
-  background-size: cover;
+
+  /* show full image height, not cropped */
+  background-size: auto 100%;
+  background-position: 58% 50%;
+
   pointer-events: none;
   transform: scale(1);
-  transform-origin: 62% 50%;
+  transform-origin: 58% 50%;
   will-change: transform, opacity;
 }
 

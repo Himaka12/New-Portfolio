@@ -127,7 +127,7 @@ function Hero() {
       x: 0,
       y: 0,
       opacity: 1,
-      transformOrigin: '62% 50%',
+      transformOrigin: '58% 50%',
       force3D: true,
     })
 
