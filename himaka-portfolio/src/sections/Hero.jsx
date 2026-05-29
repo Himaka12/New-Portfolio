@@ -123,7 +123,7 @@ useEffect(() => {
   }
 
   const clientCards = overlayLeft.querySelectorAll('.hero-client-card')
-  const overlayRevealItems = overlayText.querySelectorAll('.hero-overlay-label, p')
+  const revealLines = overlayText.querySelectorAll('.hero-reveal-line')
 
   const ctx = gsap.context(() => {
     gsap.set(heroBg, {
@@ -148,33 +148,25 @@ useEffect(() => {
       filter: 'blur(0px)',
     })
 
-    // Second section starts below the screen
     gsap.set(overlay, {
       opacity: 1,
-      y: '110vh',
+      y: '115vh',
       filter: 'blur(0px)',
     })
 
     gsap.set(overlayLeft, {
       opacity: 0,
-      y: 180,
+      y: 120,
     })
 
-    gsap.set(overlayText, {
-      opacity: 1,
-      y: 0,
-    })
-
-    // Left boxes hidden at first
     gsap.set(clientCards, {
       opacity: 0,
-      y: 60,
+      y: 80,
       clipPath: 'inset(100% 0% 0% 0%)',
     })
 
-    // Text reveal hidden at first
-    gsap.set(overlayRevealItems, {
-      opacity: 0,
+    gsap.set(revealLines, {
+      opacity: 0.08,
       y: 90,
       filter: 'blur(14px)',
       clipPath: 'inset(100% 0% 0% 0%)',
@@ -187,8 +179,8 @@ useEffect(() => {
       scrollTrigger: {
         trigger: heroSection,
         start: 'top top',
-        end: '+=2600',
-        scrub: 0.9,
+        end: '+=3000',
+        scrub: 1.1,
         pin: heroStage,
         pinSpacing: true,
         anticipatePin: 1,
@@ -197,7 +189,7 @@ useEffect(() => {
     })
 
     timeline
-      // 1. Image zoom starts normally
+      // 1. Image zoom starts immediately
       .to(
         heroBg,
         {
@@ -210,7 +202,7 @@ useEffect(() => {
         0
       )
 
-      // 2. Landing text stays visible first
+      // 2. Landing text waits briefly
       .to(
         heroMain,
         {
@@ -232,14 +224,14 @@ useEffect(() => {
         0
       )
 
-      // 3. Landing text smoothly goes up and disappears
+      // 3. Landing text goes upward first
       .to(
         heroMain,
         {
           opacity: 0,
           y: -180,
           filter: 'blur(3px)',
-          duration: 1.8,
+          duration: 1.6,
         },
         1.05
       )
@@ -248,34 +240,34 @@ useEffect(() => {
         heroAside,
         {
           opacity: 0,
-          y: -160,
+          y: -150,
           filter: 'blur(3px)',
-          duration: 1.8,
+          duration: 1.6,
         },
         1.15
       )
 
-      // 4. Image keeps zooming while landing text leaves
+      // 4. Image continues slow zoom
       .to(
         heroBg,
         {
-          scale: 1.14,
+          scale: 1.13,
           x: 0,
           y: 0,
           opacity: 1,
-          duration: 2.7,
+          duration: 2.5,
         },
         1.1
       )
 
-      // 5. Wait until landing text is fully gone, then bring overlay from bottom slowly
+      // 5. Second overlay comes from bottom slower
       .to(
         overlay,
         {
           y: 0,
-          duration: 3.2,
+          duration: 3.8,
         },
-        3.25
+        3.15
       )
 
       // 6. Left side title appears
@@ -286,60 +278,95 @@ useEffect(() => {
           y: 0,
           duration: 1.4,
         },
-        4.2
+        4.25
       )
 
-      // 7. Box cards reveal one by one
+      // 7. Box staircase reveals one by one
       .to(
         clientCards,
         {
           opacity: 1,
           y: 0,
           clipPath: 'inset(0% 0% 0% 0%)',
-          stagger: 0.18,
-          duration: 1.4,
+          stagger: 0.22,
+          duration: 1.6,
         },
-        4.45
+        4.55
       )
 
-      // 8. Main second text reveals like popup/reveal
+      // 8. All text becomes visible first, but blurred/dark
       .to(
-        overlayRevealItems,
+        revealLines,
         {
-          opacity: 1,
+          opacity: 0.22,
           y: 0,
-          filter: 'blur(0px)',
           clipPath: 'inset(0% 0% 0% 0%)',
-          stagger: 0.22,
-          duration: 1.7,
+          filter: 'blur(7px)',
+          stagger: 0.12,
+          duration: 1.8,
         },
         4.65
       )
 
-      // 9. Image continues slow zoom behind overlay
+      // 9. Main reveal line becomes sharp and white
+      .to(
+        revealLines,
+        {
+          opacity: 0.92,
+          filter: 'blur(0px)',
+          stagger: 0.18,
+          duration: 1.8,
+        },
+        5.25
+      )
+
+      // 10. Previous lines fade back slightly, like reference depth
+      .to(
+        revealLines,
+        {
+          opacity: 0.32,
+          filter: 'blur(3px)',
+          stagger: 0.16,
+          duration: 1.8,
+        },
+        6.55
+      )
+
+      // 11. Keep first important line brighter for longer
+      .to(
+        revealLines[1],
+        {
+          opacity: 1,
+          filter: 'blur(0px)',
+          duration: 1.4,
+        },
+        6.75
+      )
+
+      // 12. Image keeps zooming behind everything
       .to(
         heroBg,
         {
-          scale: 1.21,
+          scale: 1.2,
           x: 0,
           y: 0,
           opacity: 1,
-          duration: 3.8,
+          duration: 4.2,
         },
-        4.2
+        4.4
       )
 
-      // 10. Overlay moves slightly up later
+      // 13. Overlay moves slightly up later
       .to(
         overlay,
         {
           y: -80,
-          duration: 2.1,
+          duration: 2,
         },
-        7.1
+        7.6
       )
 
-      // 11. Overlay fades near the end
+      // 14. Overlay fades near the end
       .to(
         overlay,
         {
@@ -347,20 +374,20 @@ useEffect(() => {
           filter: 'blur(4px)',
           duration: 1.1,
         },
-        8.4
+        8.8
       )
 
-      // 12. Keep image visible until end
+      // 15. Keep image visible
       .to(
         heroBg,
         {
-          scale: 1.23,
+          scale: 1.22,
           x: 0,
           y: 0,
           opacity: 1,
           duration: 1.1,
         },
-        8.4
+        8.8
       )
   }, heroSection)
 
@@ -527,21 +554,55 @@ useEffect(() => {
             </div>
           </div>
 
-          <div ref={overlayTextRef} className="hero-overlay-story">
-            <span className="hero-overlay-label">(Intro)</span>
+          <div ref={overlayRef} className="hero-scroll-overlay">
+  <div ref={overlayLeftRef} className="hero-overlay-clients">
+    <span className="hero-overlay-line"></span>
 
-            <p>
-              I design and build digital products that are simple, useful, and
-              easy to understand. My work connects frontend development, backend
-              systems, database design, and AI/ML experiments.
-            </p>
+    <h2>
+      Industry projects
+      <br />
+      I worked on
+    </h2>
 
-            <p>
-              My goal is to create portfolio projects that feel practical, modern,
-              and human-centered instead of just looking like normal university
-              assignments.
-            </p>
-          </div>
+    <div className="hero-client-grid">
+      <a className="hero-client-card hero-client-card--one" href="#projects">
+        <strong>Toy</strong>
+        <small>Gallery</small>
+      </a>
+
+      <a className="hero-client-card hero-client-card--two" href="#projects">
+        <strong>AI</strong>
+        <small>Survey</small>
+      </a>
+
+      <a className="hero-client-card hero-client-card--three" href="#projects">
+        <strong>KDD99</strong>
+        <small>ML</small>
+      </a>
+
+      <a className="hero-client-card hero-client-card--four" href="#projects">
+        <strong>Appointment</strong>
+        <small>System</small>
+      </a>
+    </div>
+  </div>
+
+  <div ref={overlayTextRef} className="hero-overlay-story">
+    <span className="hero-overlay-label hero-reveal-line">(Intro)</span>
+
+    <p>
+      <span className="hero-reveal-line">I design and build digital products that are</span>
+      <span className="hero-reveal-line">simple, useful, and easy to understand.</span>
+      <span className="hero-reveal-line">My work connects frontend development,</span>
+      <span className="hero-reveal-line">backend systems, database design, and AI/ML.</span>
+    </p>
+
+    <p>
+      <span className="hero-reveal-line">My goal is to create portfolio projects that</span>
+      <span className="hero-reveal-line">feel practical, modern, and human-centered.</span>
+    </p>
+  </div>
+</div>
         </div>
       </div>
     </section>
