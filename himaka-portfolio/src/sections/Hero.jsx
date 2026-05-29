@@ -122,6 +122,9 @@ useEffect(() => {
     return
   }
 
+  const clientCards = overlayLeft.querySelectorAll('.hero-client-card')
+  const overlayRevealItems = overlayText.querySelectorAll('.hero-overlay-label, p')
+
   const ctx = gsap.context(() => {
     gsap.set(heroBg, {
       scale: 1,
@@ -141,18 +144,40 @@ useEffect(() => {
     gsap.set(heroAside, {
       opacity: 1,
       x: 0,
+      y: 0,
       filter: 'blur(0px)',
     })
 
+    // Second section starts below the screen
     gsap.set(overlay, {
-      opacity: 0,
-      y: '100vh',
+      opacity: 1,
+      y: '110vh',
       filter: 'blur(0px)',
     })
 
-    gsap.set([overlayLeft, overlayText], {
+    gsap.set(overlayLeft, {
       opacity: 0,
-    y: 220,
+      y: 180,
+    })
+
+    gsap.set(overlayText, {
+      opacity: 1,
+      y: 0,
+    })
+
+    // Left boxes hidden at first
+    gsap.set(clientCards, {
+      opacity: 0,
+      y: 60,
+      clipPath: 'inset(100% 0% 0% 0%)',
+    })
+
+    // Text reveal hidden at first
+    gsap.set(overlayRevealItems, {
+      opacity: 0,
+      y: 90,
+      filter: 'blur(14px)',
+      clipPath: 'inset(100% 0% 0% 0%)',
     })
 
     const timeline = gsap.timeline({
@@ -171,171 +196,172 @@ useEffect(() => {
       },
     })
 
-timeline
-  // 1. Image starts zooming immediately
-  .to(
-    heroBg,
-    {
-      scale: 1.08,
-      x: 0,
-      y: 0,
-      opacity: 1,
-      duration: 1.6,
-    },
-    0
-  )
+    timeline
+      // 1. Image zoom starts normally
+      .to(
+        heroBg,
+        {
+          scale: 1.08,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 2.2,
+        },
+        0
+      )
 
-  // 2. Landing text stays visible first
-  .to(
-    heroMain,
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-    },
-    0
-  )
+      // 2. Landing text stays visible first
+      .to(
+        heroMain,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+        },
+        0
+      )
 
-  .to(
-    heroAside,
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.7,
-    },
-    0
-  )
+      .to(
+        heroAside,
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 0.9,
+        },
+        0
+      )
 
-  // 3. Landing text smoothly moves UP and disappears
-  .to(
-    heroMain,
-    {
-      opacity: 0,
-      y: -180,
-      filter: 'blur(3px)',
-      duration: 1.4,
-    },
-    0.9
-  )
+      // 3. Landing text smoothly goes up and disappears
+      .to(
+        heroMain,
+        {
+          opacity: 0,
+          y: -180,
+          filter: 'blur(3px)',
+          duration: 1.8,
+        },
+        1.05
+      )
 
-  .to(
-    heroAside,
-    {
-      opacity: 0,
-      y: -150,
-      filter: 'blur(3px)',
-      duration: 1.4,
-    },
-    1.0
-  )
+      .to(
+        heroAside,
+        {
+          opacity: 0,
+          y: -160,
+          filter: 'blur(3px)',
+          duration: 1.8,
+        },
+        1.15
+      )
 
-  // 4. Image continues zooming while landing text is leaving
-  .to(
-    heroBg,
-    {
-      scale: 1.14,
-      x: 0,
-      y: 0,
-      opacity: 1,
-      duration: 2.2,
-    },
-    1.0
-  )
+      // 4. Image keeps zooming while landing text leaves
+      .to(
+        heroBg,
+        {
+          scale: 1.14,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 2.7,
+        },
+        1.1
+      )
 
-  // 5. Small waiting space after landing text is fully gone
-  .to(
-    heroBg,
-    {
-      scale: 1.16,
-      x: 0,
-      y: 0,
-      opacity: 1,
-      duration: 0.9,
-    },
-    2.35
-  )
+      // 5. Wait until landing text is fully gone, then bring overlay from bottom slowly
+      .to(
+        overlay,
+        {
+          y: 0,
+          duration: 3.2,
+        },
+        3.25
+      )
 
-  // 6. Second overlay starts ONLY after landing text is gone
-  .to(
-    overlay,
-    {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      duration: 2.1,
-    },
-    3.25
-  )
+      // 6. Left side title appears
+      .to(
+        overlayLeft,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.4,
+        },
+        4.2
+      )
 
-  // 7. Left overlay comes slowly from bottom
-  .to(
-    overlayLeft,
-    {
-      opacity: 1,
-      y: 0,
-      duration: 1.7,
-    },
-    3.55
-  )
+      // 7. Box cards reveal one by one
+      .to(
+        clientCards,
+        {
+          opacity: 1,
+          y: 0,
+          clipPath: 'inset(0% 0% 0% 0%)',
+          stagger: 0.18,
+          duration: 1.4,
+        },
+        4.45
+      )
 
-  // 8. Main second text comes slowly from bottom
-  .to(
-    overlayText,
-    {
-      opacity: 1,
-      y: 0,
-      duration: 1.8,
-    },
-    3.75
-  )
+      // 8. Main second text reveals like popup/reveal
+      .to(
+        overlayRevealItems,
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          clipPath: 'inset(0% 0% 0% 0%)',
+          stagger: 0.22,
+          duration: 1.7,
+        },
+        4.65
+      )
 
-  // 9. Image keeps zooming behind second text
-  .to(
-    heroBg,
-    {
-      scale: 1.21,
-      x: 0,
-      y: 0,
-      opacity: 1,
-      duration: 3,
-    },
-    3.4
-  )
+      // 9. Image continues slow zoom behind overlay
+      .to(
+        heroBg,
+        {
+          scale: 1.21,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 3.8,
+        },
+        4.2
+      )
 
-  // 10. Second overlay moves slightly up later
-  .to(
-    overlay,
-    {
-      y: -70,
-      duration: 1.8,
-    },
-    5.85
-  )
+      // 10. Overlay moves slightly up later
+      .to(
+        overlay,
+        {
+          y: -80,
+          duration: 2.1,
+        },
+        7.1
+      )
 
-  // 11. Second overlay fades near the end
-  .to(
-    overlay,
-    {
-      opacity: 0,
-      filter: 'blur(4px)',
-      duration: 1,
-    },
-    6.95
-  )
+      // 11. Overlay fades near the end
+      .to(
+        overlay,
+        {
+          opacity: 0,
+          filter: 'blur(4px)',
+          duration: 1.1,
+        },
+        8.4
+      )
 
-  // 12. Keep image visible until end
-  .to(
-    heroBg,
-    {
-      scale: 1.23,
-      x: 0,
-      y: 0,
-      opacity: 1,
-      duration: 1,
-    },
-    6.95
-  )
-  
+      // 12. Keep image visible until end
+      .to(
+        heroBg,
+        {
+          scale: 1.23,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          duration: 1.1,
+        },
+        8.4
+      )
   }, heroSection)
 
   return () => ctx.revert()
@@ -478,10 +504,26 @@ timeline
             </h2>
 
             <div className="hero-client-grid">
-              <span>Toy Gallery</span>
-              <span>AI Survey</span>
-              <span>KDD99 ML</span>
-              <span>Appointment System</span>
+              <span className="hero-client-card">
+                <strong>Toy</strong>
+                <small>Gallery</small>
+              </span>
+
+              <span className="hero-client-card">
+                <strong>AI</strong>
+                <small>Survey</small>
+              </span>
+
+              <span className="hero-client-card">
+                <strong>KDD99</strong>
+                <small>ML</small>
+              </span>
+
+              <span className="hero-client-card">
+                <strong>Appointment</strong>
+                <small>System</small>
+              </span>
+
             </div>
           </div>
 
