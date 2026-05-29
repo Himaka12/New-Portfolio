@@ -146,13 +146,13 @@ useEffect(() => {
 
     gsap.set(overlay, {
       opacity: 0,
-      y: 180,
+      y: '100vh',
       filter: 'blur(0px)',
     })
 
     gsap.set([overlayLeft, overlayText], {
       opacity: 0,
-      y: 140,
+    y: 220,
     })
 
     const timeline = gsap.timeline({
@@ -172,26 +172,26 @@ useEffect(() => {
     })
 
 timeline
-  // Stage 1: image starts slow zoom immediately
+  // 1. Image starts zooming immediately
   .to(
     heroBg,
     {
-      scale: 1.06,
+      scale: 1.08,
       x: 0,
       y: 0,
       opacity: 1,
-      duration: 2,
+      duration: 1.6,
     },
     0
   )
 
-  // Stage 2: landing text stays for a short moment
+  // 2. Landing text stays visible first
   .to(
     heroMain,
     {
       opacity: 1,
       y: 0,
-      duration: 0.8,
+      duration: 0.7,
     },
     0
   )
@@ -201,39 +201,39 @@ timeline
     {
       opacity: 1,
       y: 0,
-      duration: 0.8,
+      duration: 0.7,
     },
     0
   )
 
-  // Stage 3: landing text smoothly goes UP and disappears
+  // 3. Landing text smoothly moves UP and disappears
   .to(
     heroMain,
     {
       opacity: 0,
-      y: -160,
+      y: -180,
       filter: 'blur(3px)',
-      duration: 1.5,
+      duration: 1.4,
+    },
+    0.9
+  )
+
+  .to(
+    heroAside,
+    {
+      opacity: 0,
+      y: -150,
+      filter: 'blur(3px)',
+      duration: 1.4,
     },
     1.0
   )
 
-  .to(
-    heroAside,
-    {
-      opacity: 0,
-      y: -130,
-      filter: 'blur(3px)',
-      duration: 1.5,
-    },
-    1.1
-  )
-
-  // Stage 4: image continues zooming while landing text is leaving
+  // 4. Image continues zooming while landing text is leaving
   .to(
     heroBg,
     {
-      scale: 1.12,
+      scale: 1.14,
       x: 0,
       y: 0,
       opacity: 1,
@@ -242,58 +242,58 @@ timeline
     1.0
   )
 
-  // Stage 5: small empty timing gap after landing text is gone
+  // 5. Small waiting space after landing text is fully gone
   .to(
     heroBg,
     {
-      scale: 1.14,
+      scale: 1.16,
       x: 0,
       y: 0,
       opacity: 1,
-      duration: 0.7,
+      duration: 0.9,
     },
-    2.65
+    2.35
   )
 
-  // Stage 6: second overlay container comes from bottom
+  // 6. Second overlay starts ONLY after landing text is gone
   .to(
     overlay,
     {
       opacity: 1,
       y: 0,
       filter: 'blur(0px)',
-      duration: 1.4,
+      duration: 2.1,
     },
-    3.2
+    3.25
   )
 
-  // Stage 7: second overlay left part comes after container
+  // 7. Left overlay comes slowly from bottom
   .to(
     overlayLeft,
     {
       opacity: 1,
       y: 0,
-      duration: 1.2,
+      duration: 1.7,
     },
-    3.35
+    3.55
   )
 
-  // Stage 8: main second text comes from bottom
+  // 8. Main second text comes slowly from bottom
   .to(
     overlayText,
     {
       opacity: 1,
       y: 0,
-      duration: 1.2,
+      duration: 1.8,
     },
-    3.5
+    3.75
   )
 
-  // Stage 9: image keeps zooming behind second text
+  // 9. Image keeps zooming behind second text
   .to(
     heroBg,
     {
-      scale: 1.2,
+      scale: 1.21,
       x: 0,
       y: 0,
       opacity: 1,
@@ -302,17 +302,17 @@ timeline
     3.4
   )
 
-  // Stage 10: second overlay slowly moves up later
+  // 10. Second overlay moves slightly up later
   .to(
     overlay,
     {
-      y: -80,
+      y: -70,
       duration: 1.8,
     },
-    5.6
+    5.85
   )
 
-  // Stage 11: second overlay fades near end
+  // 11. Second overlay fades near the end
   .to(
     overlay,
     {
@@ -320,10 +320,10 @@ timeline
       filter: 'blur(4px)',
       duration: 1,
     },
-    6.8
+    6.95
   )
 
-  // Stage 12: keep image visible, do not show black early
+  // 12. Keep image visible until end
   .to(
     heroBg,
     {
@@ -333,7 +333,7 @@ timeline
       opacity: 1,
       duration: 1,
     },
-    6.8
+    6.95
   )
   
   }, heroSection)
