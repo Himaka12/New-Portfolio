@@ -171,141 +171,171 @@ useEffect(() => {
       },
     })
 
-    timeline
-      // Stage 1: image zooms slowly, but it does not move up
-      .to(
-        heroBg,
-        {
-          scale: 1.08,
-          x: 0,
-          y: 0,
-          opacity: 1,
-          duration: 2,
-        },
-        0
-      )
+timeline
+  // Stage 1: image starts slow zoom immediately
+  .to(
+    heroBg,
+    {
+      scale: 1.06,
+      x: 0,
+      y: 0,
+      opacity: 1,
+      duration: 2,
+    },
+    0
+  )
 
-      // Stage 2: landing text stays visible first
-      .to(
-        heroMain,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.4,
-        },
-        0
-      )
+  // Stage 2: landing text stays for a short moment
+  .to(
+    heroMain,
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+    },
+    0
+  )
 
-      .to(
-        heroAside,
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1.4,
-        },
-        0
-      )
+  .to(
+    heroAside,
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+    },
+    0
+  )
 
-      // Stage 3: landing text fades slowly
-      .to(
-        heroMain,
-        {
-          opacity: 0,
-          y: -45,
-          filter: 'blur(2px)',
-          duration: 1.5,
-        },
-        1.5
-      )
+  // Stage 3: landing text smoothly goes UP and disappears
+  .to(
+    heroMain,
+    {
+      opacity: 0,
+      y: -160,
+      filter: 'blur(3px)',
+      duration: 1.5,
+    },
+    1.0
+  )
 
-      .to(
-        heroAside,
-        {
-          opacity: 0,
-          x: 35,
-          filter: 'blur(2px)',
-          duration: 1.5,
-        },
-        1.65
-      )
+  .to(
+    heroAside,
+    {
+      opacity: 0,
+      y: -130,
+      filter: 'blur(3px)',
+      duration: 1.5,
+    },
+    1.1
+  )
 
-      // Stage 4: overlay text comes from bottom
-      .to(
-        overlay,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.6,
-        },
-        2.45
-      )
+  // Stage 4: image continues zooming while landing text is leaving
+  .to(
+    heroBg,
+    {
+      scale: 1.12,
+      x: 0,
+      y: 0,
+      opacity: 1,
+      duration: 2.2,
+    },
+    1.0
+  )
 
-      .to(
-        overlayLeft,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.4,
-        },
-        2.7
-      )
+  // Stage 5: small empty timing gap after landing text is gone
+  .to(
+    heroBg,
+    {
+      scale: 1.14,
+      x: 0,
+      y: 0,
+      opacity: 1,
+      duration: 0.7,
+    },
+    2.65
+  )
 
-      .to(
-        overlayText,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.4,
-        },
-        2.9
-      )
+  // Stage 6: second overlay container comes from bottom
+  .to(
+    overlay,
+    {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      duration: 1.4,
+    },
+    3.2
+  )
 
-      // Stage 5: image keeps zooming behind overlay text
-      .to(
-        heroBg,
-        {
-          scale: 1.18,
-          x: 0,
-          y: 0,
-          opacity: 1,
-          duration: 3.2,
-        },
-        2.5
-      )
+  // Stage 7: second overlay left part comes after container
+  .to(
+    overlayLeft,
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+    },
+    3.35
+  )
 
-      // Stage 6: overlay moves slightly upward
-      .to(
-        overlay,
-        {
-          y: -70,
-          duration: 1.8,
-        },
-        5.1
-      )
+  // Stage 8: main second text comes from bottom
+  .to(
+    overlayText,
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+    },
+    3.5
+  )
 
-      // Stage 7: overlay fades, image still stays visible
-      .to(
-        overlay,
-        {
-          opacity: 0,
-          filter: 'blur(4px)',
-          duration: 1,
-        },
-        6.4
-      )
+  // Stage 9: image keeps zooming behind second text
+  .to(
+    heroBg,
+    {
+      scale: 1.2,
+      x: 0,
+      y: 0,
+      opacity: 1,
+      duration: 3,
+    },
+    3.4
+  )
 
-      // Important: keep image visible until the pin ends
-      .to(
-        heroBg,
-        {
-          scale: 1.2,
-          x: 0,
-          y: 0,
-          opacity: 1,
-          duration: 1,
-        },
-        6.4
-      )
+  // Stage 10: second overlay slowly moves up later
+  .to(
+    overlay,
+    {
+      y: -80,
+      duration: 1.8,
+    },
+    5.6
+  )
+
+  // Stage 11: second overlay fades near end
+  .to(
+    overlay,
+    {
+      opacity: 0,
+      filter: 'blur(4px)',
+      duration: 1,
+    },
+    6.8
+  )
+
+  // Stage 12: keep image visible, do not show black early
+  .to(
+    heroBg,
+    {
+      scale: 1.23,
+      x: 0,
+      y: 0,
+      opacity: 1,
+      duration: 1,
+    },
+    6.8
+  )
+  
   }, heroSection)
 
   return () => ctx.revert()
