@@ -179,8 +179,8 @@ useEffect(() => {
       scrollTrigger: {
         trigger: heroSection,
         start: 'top top',
-        end: '+=3000',
-        scrub: 1.1,
+        end: '+=1900',
+        scrub: 0.55,
         pin: heroStage,
         pinSpacing: true,
         anticipatePin: 1,
