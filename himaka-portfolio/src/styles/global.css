@@ -1249,7 +1249,7 @@ body::-webkit-scrollbar {
 
 .hero-aside__block {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
 .hero-aside__line {
