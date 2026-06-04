@@ -1,3 +1,15 @@
+/* ========================================================================
+   Himaka Portfolio - global.css
+   Replace: himaka-portfolio/src/styles/global.css
+   Notes:
+   - This file keeps your current landing image size/position.
+   - Hero aside spacing is cleaned. No negative margins. No duplicate overrides.
+   - Service list is centered consistently between the two horizontal lines.
+   ======================================================================== */
+
+/* ========================================================================
+   01. Design tokens
+   ======================================================================== */
 :root {
   --bg: #000000;
   --panel: rgba(18, 18, 21, 0.82);
@@ -6,6 +18,7 @@
   --text: #efe9df;
   --text-muted: #ada79f;
   --accent: #ff8a1e;
+  --accent-red: #ff3d00;
   --accent-soft: rgba(255, 138, 30, 0.16);
   --white-soft: rgba(255, 255, 255, 0.72);
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
@@ -14,17 +27,29 @@
   --container: 1180px;
 }
 
+/* ========================================================================
+   02. Base reset
+   ======================================================================== */
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
   margin: 0;
+  padding: 0;
   min-width: 320px;
+  overflow-x: hidden;
   background: #000000;
   color: var(--text);
   font-family: Inter, 'Segoe UI', Roboto, sans-serif;
@@ -65,16 +90,19 @@ button {
   display: none;
 }
 
+/* ========================================================================
+   03. Shared layout
+   ======================================================================== */
 .container {
-  width: min(var(--container), calc(100% - 40px));
-  margin: 0 auto;
   position: relative;
   z-index: 1;
+  width: min(var(--container), calc(100% - 40px));
+  margin: 0 auto;
 }
 
 .section {
-  padding: 120px 0;
   position: relative;
+  padding: 120px 0;
 }
 
 .section[id] {
@@ -148,6 +176,9 @@ button {
   margin-top: 16px;
 }
 
+/* ========================================================================
+   04. Buttons, tags, chips
+   ======================================================================== */
 .button {
   display: inline-flex;
   align-items: center;
@@ -155,8 +186,8 @@ button {
   gap: 10px;
   min-height: 52px;
   padding: 0 24px;
-  border-radius: 999px;
   border: 1px solid transparent;
+  border-radius: 999px;
   background: var(--accent);
   color: #1a1109;
   font-weight: 700;
@@ -181,9 +212,9 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .tag,
@@ -192,13 +223,16 @@ button {
   display: inline-flex;
   align-items: center;
   padding: 10px 14px;
-  border-radius: 999px;
   border: 1px solid rgba(255, 138, 30, 0.18);
+  border-radius: 999px;
   background: rgba(255, 138, 30, 0.08);
   color: var(--text);
   font-size: 0.92rem;
 }
 
+/* ========================================================================
+   05. Header and mobile menu
+   ======================================================================== */
 .site-header {
   display: none;
 }
@@ -220,8 +254,8 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  font-weight: 700;
   font-size: 0.98rem;
+  font-weight: 700;
 }
 
 .brand span {
@@ -239,9 +273,9 @@ button {
 .brand__mark {
   width: 38px;
   height: 38px;
-  border-radius: 50%;
   display: grid;
   place-items: center;
+  border-radius: 50%;
   background: linear-gradient(135deg, rgba(255, 138, 30, 0.9), rgba(255, 181, 118, 0.45));
   color: #1e1206;
   box-shadow: 0 14px 30px rgba(255, 138, 30, 0.18);
@@ -258,8 +292,8 @@ button {
 .site-footer__links a,
 .mobile-menu__links a {
   color: var(--white-soft);
-  transition: color 0.3s ease;
   font-size: 0.92rem;
+  transition: color 0.3s ease;
 }
 
 .nav-links a:hover,
@@ -284,8 +318,8 @@ button {
   display: none;
   width: 44px;
   height: 44px;
-  border-radius: 50%;
   border: 1px solid var(--border-strong);
+  border-radius: 50%;
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
 }
@@ -293,15 +327,13 @@ button {
 .mobile-menu {
   position: fixed;
   inset: 0;
+  z-index: 60;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   background: rgba(5, 5, 6, 0.8);
   backdrop-filter: blur(18px);
-  transition:
-    opacity 0.3s ease,
-    visibility 0.3s ease;
-  z-index: 60;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .mobile-menu--open {
@@ -312,11 +344,11 @@ button {
 
 .mobile-menu__panel {
   width: min(100%, 420px);
-  margin-left: auto;
   min-height: 100vh;
-  background: #0f0f11;
-  border-left: 1px solid var(--border);
+  margin-left: auto;
   padding: 24px;
+  border-left: 1px solid var(--border);
+  background: #0f0f11;
 }
 
 .mobile-menu__header {
@@ -333,6 +365,9 @@ button {
   font-size: 1.15rem;
 }
 
+/* ========================================================================
+   06. Hero section wrapper and background image
+   ======================================================================== */
 .hero-section {
   min-height: 100vh;
   padding: 0;
@@ -345,9 +380,9 @@ button {
   height: 100vh;
   padding: 108px 56px 40px;
   overflow: hidden;
-  background: #000000;
   isolation: isolate;
   box-sizing: border-box;
+  background: #000000;
 }
 
 .hero-stage__bg {
@@ -357,10 +392,8 @@ button {
   opacity: 1;
   background-image: url('/images/My-Portfolio.png');
   background-repeat: no-repeat;
-
   background-size: auto 82%;
   background-position: 55% 38%;
-
   pointer-events: none;
   transform: scale(1);
   transform-origin: 45% 50%;
@@ -371,16 +404,19 @@ button {
   position: absolute;
   inset: 0;
   z-index: 1;
+  pointer-events: none;
   background:
     linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.02) 45%, rgba(0, 0, 0, 0.28) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.12) 100%);
-  pointer-events: none;
 }
 
 .hero-stage__texture {
   display: none;
 }
 
+/* ========================================================================
+   07. Hero fixed top navigation
+   ======================================================================== */
 .hero-stage__meta {
   position: fixed;
   top: 0;
@@ -394,7 +430,6 @@ button {
   min-height: 56px;
   padding: 0 56px;
   box-sizing: border-box;
-  border-radius: 0;
   pointer-events: auto;
   transition:
     background-color 0.28s ease,
@@ -425,8 +460,8 @@ button {
   right: 0;
   bottom: -18px;
   height: 18px;
-  background: linear-gradient(180deg, rgba(8, 9, 11, 0.05), rgba(8, 9, 11, 0));
   pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 9, 11, 0.05), rgba(8, 9, 11, 0));
 }
 
 .hero-meta-copy,
@@ -436,7 +471,6 @@ button {
   color: var(--white-soft);
   font-size: 0.92rem;
   line-height: 1;
-  padding-top: 0;
 }
 
 .hero-socials,
@@ -452,47 +486,40 @@ button {
   gap: 14px;
 }
 
-.hero-socials a {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  padding-bottom: 3px;
-  transition: color 0.28s ease;
+.hero-socials {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  justify-content: center;
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
 }
 
+.hero-socials > span:first-child {
+  color: var(--white-soft);
+}
+
+.hero-socials a,
 .hero-short-nav a,
 .hero-top-cta {
   position: relative;
   display: inline-flex;
   align-items: center;
   padding-bottom: 3px;
-  color: rgba(255, 255, 255, 0.38);
   transition: color 0.28s ease;
 }
 
-.hero-socials a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 1px;
-  background: #ff3b1f;
-  transform: scaleX(0);
-  transform-origin: right center;
-  transition: transform 0.28s ease;
+.hero-socials a,
+.hero-short-nav a {
+  color: rgba(255, 255, 255, 0.38);
 }
 
-.hero-socials a:hover {
-  color: #ff3b1f;
+.hero-socials span,
+.hero-short-nav span {
+  color: rgba(255, 255, 255, 0.38);
 }
 
-.hero-socials a:hover::after,
-.hero-socials a:focus-visible::after {
-  transform: scaleX(1);
-  transform-origin: left center;
-}
-
+.hero-socials a::after,
 .hero-short-nav a::after,
 .hero-top-cta::after {
   content: '';
@@ -507,11 +534,27 @@ button {
   transition: transform 0.28s ease;
 }
 
+.hero-socials a:hover,
+.hero-socials a:focus-visible,
 .hero-short-nav a:hover,
 .hero-short-nav a:focus-visible,
 .hero-top-cta:hover,
 .hero-top-cta:focus-visible {
   color: #ff3b1f;
+}
+
+.hero-socials a:hover::after,
+.hero-socials a:focus-visible::after,
+.hero-short-nav a:hover::after,
+.hero-short-nav a:focus-visible::after,
+.hero-top-cta:hover::after,
+.hero-top-cta:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.hero-short-nav {
+  justify-self: end;
 }
 
 .hero-short-nav a.is-active,
@@ -525,40 +568,6 @@ button {
   transform: scaleX(0);
 }
 
-.hero-short-nav a:hover::after,
-.hero-short-nav a:focus-visible::after,
-.hero-top-cta:hover::after,
-.hero-top-cta:focus-visible::after {
-  transform: scaleX(1);
-  transform-origin: left center;
-}
-
-.hero-socials {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  justify-content: center;
-  white-space: nowrap;
-}
-
-.hero-socials > span:first-child {
-  color: var(--white-soft);
-}
-
-.hero-socials a {
-  color: rgba(255, 255, 255, 0.38);
-}
-
-.hero-socials span,
-.hero-short-nav span {
-  color: rgba(255, 255, 255, 0.38);
-}
-
-.hero-short-nav {
-  justify-self: end;
-}
-
 .hero-top-cta {
   justify-self: end;
   margin-left: 72px;
@@ -567,10 +576,9 @@ button {
   color: var(--text);
 }
 
-.hero-top-cta::after {
-  width: 100%;
-}
-
+/* ========================================================================
+   08. Hero landing layout
+   ======================================================================== */
 .hero-layout,
 .about-grid,
 .contact-grid {
@@ -598,13 +606,13 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 64px 0 10px;
   max-width: min(1380px, 100%);
+  padding: 64px 0 10px;
 }
 
 .hero-intro {
-  margin-bottom: 24px;
   max-width: 640px;
+  margin-bottom: 24px;
 }
 
 .hero-intro p {
@@ -640,13 +648,13 @@ button {
 .hero-headline {
   display: flex;
   flex-direction: column;
+  max-width: min(1460px, 86vw);
   margin-bottom: 0;
   font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(4.95rem, 7.95vw, 8.9rem);
   line-height: 0.86;
   letter-spacing: -0.055em;
   text-transform: uppercase;
-  max-width: min(1460px, 86vw);
 }
 
 .hero-headline strong {
@@ -658,58 +666,51 @@ button {
   color: #ff5a12;
 }
 
-.hero-copy {
-  max-width: 420px;
-  font-size: 1.02rem;
-}
-
 .hero-scroll-note {
   margin-top: 24px;
   color: rgba(255, 255, 255, 0.52);
   font-size: 0.92rem;
 }
 
+/* ========================================================================
+   09. Hero right-side aside - FIXED CLEAN SPACING
+   ======================================================================== */
 .hero-aside {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 130px 0 10px;
+  justify-content: flex-start;
+  gap: 16px;
   min-height: 100%;
   margin-left: 18px;
+  padding: clamp(88px, 13vh, 122px) 0 10px;
 }
 
 .hero-aside__block {
   display: grid;
-  gap: 15px;
+  gap: 16px;
 }
 
-
-
 .hero-aside__line {
+  display: block;
   width: 100%;
-  height: 0.1px;
+  height: 1px;
+  margin: 0;
   background: rgba(255, 255, 255, 0.16);
 }
 
 .hero-service-list {
   display: grid;
-  gap: 14px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
   color: rgba(255, 255, 255, 0.68);
-  font-size: 0.8rem;
-  line-height: 0.85;
-  margin-bottom: -90px;
-
 }
 
-.hero-help-link {
-  color: var(--text);
-  font-size: 1.6rem;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 6px;
+.hero-service-list li {
+  margin: 0;
+  font-size: clamp(0.76rem, 0.8vw, 0.88rem);
+  line-height: 1.25;
 }
 
 .hero-help-row {
@@ -719,9 +720,22 @@ button {
   gap: 20px;
 }
 
+.hero-help-link {
+  color: var(--text);
+  font-size: clamp(1.32rem, 1.45vw, 1.6rem);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
 .hero-help-arrow {
   color: var(--text);
   font-size: 1.8rem;
+}
+
+.hero-copy {
+  max-width: 420px;
+  font-size: clamp(0.88rem, 0.95vw, 1.02rem);
 }
 
 .hero-awards-mini {
@@ -738,14 +752,17 @@ button {
   gap: 8px;
 }
 
+/* ========================================================================
+   10. Hero scroll overlay section
+   ======================================================================== */
 .hero-scroll-overlay {
   position: absolute;
   inset: 0;
   z-index: 3;
   display: grid;
   grid-template-columns: minmax(260px, 0.75fr) minmax(420px, 1.25fr);
-  gap: 72px;
   align-items: center;
+  gap: 72px;
   padding: 120px 56px 80px;
   pointer-events: none;
   will-change: transform, opacity, filter;
@@ -766,8 +783,8 @@ button {
 }
 
 .hero-overlay-clients h2 {
-  margin: 0;
   max-width: 300px;
+  margin: 0;
   color: var(--text);
   font-size: clamp(1.65rem, 2.4vw, 3.2rem);
   line-height: 1.05;
@@ -797,6 +814,7 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(8px);
   cursor: pointer;
+  pointer-events: auto;
   transition:
     color 260ms ease,
     transform 260ms ease,
@@ -808,8 +826,8 @@ button {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: #ff3d00;
   opacity: 0;
+  background: #ff3d00;
   transform: translateY(100%);
   transition:
     opacity 260ms ease,
@@ -897,6 +915,9 @@ button {
   color: rgba(255, 255, 255, 0.72);
 }
 
+/* ========================================================================
+   11. About and contact shared layout
+   ======================================================================== */
 .about-grid,
 .contact-grid {
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
@@ -948,8 +969,8 @@ button {
 .award-card,
 .tech-card,
 .testimonial-card {
-  border-radius: var(--radius-lg);
   padding: 26px;
+  border-radius: var(--radius-lg);
 }
 
 .service-card__icon,
@@ -959,10 +980,10 @@ button {
   height: 52px;
   display: grid;
   place-items: center;
+  margin-bottom: 18px;
   border-radius: 16px;
   background: var(--accent-soft);
   color: var(--accent);
-  margin-bottom: 18px;
 }
 
 .service-card h3,
@@ -970,12 +991,15 @@ button {
 .testimonial-card h3,
 .experience-card h3,
 .project-card h3 {
+  margin-bottom: 14px;
   font-size: 1.36rem;
   line-height: 1.2;
   letter-spacing: -0.03em;
-  margin-bottom: 14px;
 }
 
+/* ========================================================================
+   12. About section
+   ======================================================================== */
 .about-highlights {
   display: grid;
   gap: 16px;
@@ -983,8 +1007,8 @@ button {
 }
 
 .info-chip {
-  border-radius: 20px;
   padding: 20px 22px;
+  border-radius: 20px;
 }
 
 .info-chip strong {
@@ -993,16 +1017,16 @@ button {
   font-size: 1rem;
 }
 
+.about-visual {
+  display: grid;
+  gap: 22px;
+}
+
 .about-visual__card,
 .contact-panel,
 .experience-card,
 .project-card {
   border-radius: var(--radius-xl);
-}
-
-.about-visual {
-  display: grid;
-  gap: 22px;
 }
 
 .about-visual__card {
@@ -1017,8 +1041,8 @@ button {
 }
 
 .stack-card {
-  border-radius: 20px;
   padding: 24px 20px;
+  border-radius: 20px;
 }
 
 .stack-card strong {
@@ -1026,6 +1050,9 @@ button {
   margin-top: 10px;
 }
 
+/* ========================================================================
+   13. Tech and experience sections
+   ======================================================================== */
 .tech-card {
   min-height: 160px;
   display: flex;
@@ -1036,9 +1063,9 @@ button {
 .tech-card__mark {
   width: 62px;
   height: 62px;
-  border-radius: 18px;
   display: grid;
   place-items: center;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.04);
   color: var(--accent);
   font-size: 1.15rem;
@@ -1059,8 +1086,8 @@ button {
 .marquee {
   position: relative;
   display: flex;
-  overflow: hidden;
   gap: 18px;
+  overflow: hidden;
   padding-top: 18px;
 }
 
@@ -1075,12 +1102,15 @@ button {
   display: inline-flex;
   align-items: center;
   padding: 16px 22px;
+  border: 1px solid var(--border);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border);
   white-space: nowrap;
 }
 
+/* ========================================================================
+   14. Projects section
+   ======================================================================== */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1102,8 +1132,8 @@ button {
 
 .project-card__layer {
   position: absolute;
-  border-radius: 26px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 26px;
 }
 
 .project-card__layer--back {
@@ -1169,6 +1199,9 @@ button {
   color: var(--accent);
 }
 
+/* ========================================================================
+   15. Testimonials, contact, footer
+   ======================================================================== */
 .testimonial-card {
   min-height: 100%;
 }
@@ -1182,9 +1215,9 @@ button {
 }
 
 .contact-panel {
-  padding: 34px;
   display: grid;
   gap: 20px;
+  padding: 34px;
 }
 
 .contact-item {
@@ -1210,64 +1243,4 @@ button {
 .site-footer__inner {
   display: grid;
   gap: 22px;
-}
-
-
-
-
-
-
-
-/* src/index.css or src/App.css */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background: #000000;
-  overflow-x: hidden;
-}
-
-/* Hide scrollbar but still allow scrolling */
-html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Old Edge */
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-
-
-/* Stable right-side hero spacing */
-.hero-aside {
-  justify-content: flex-start;
-  gap: clamp(28px, 4vh, 46px);
-  padding-top: clamp(86px, 13vh, 120px);
-  padding-bottom: 24px;
-}
-
-.hero-aside__block {
-  display: grid;
-  gap: 12px;
-}
-
-.hero-aside__line {
-  display: block;
-  width: 100%;
-  height: 1px;
-  margin: 0;
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.hero-service-list {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-}
-
-.hero-service-list li {
-  font-size: clamp(0.78rem, 0.82vw, 0.9rem);
-  line-height: 1.22;
 }
