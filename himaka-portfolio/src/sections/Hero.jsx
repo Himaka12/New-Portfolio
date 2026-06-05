@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Github, Linkedin, Search } from 'lucide-react'
+import { Code2, Briefcase, Search } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -530,7 +530,7 @@ useEffect(() => {
                   rel="noopener noreferrer"
                   aria-label="GitHub profile"
                 >
-                  <Github size={18} strokeWidth={2.1} />
+                  <Code2 size={18} strokeWidth={2.1} />
                 </a>
 
                 <a
@@ -540,7 +540,7 @@ useEffect(() => {
                   rel="noopener noreferrer"
                   aria-label="LinkedIn profile"
                 >
-                  <Linkedin size={18} strokeWidth={2.1} />
+                  <Briefcase size={18} strokeWidth={2.1} />
                 </a>
               </div>
             </div>
