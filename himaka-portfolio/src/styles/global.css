@@ -729,56 +729,70 @@ button {
   transition: color 220ms ease;
 }
 
-.hero-help-row:hover .hero-help-link,
 .hero-help-link:hover {
   color: #ff3d00;
 }
 
 .hero-help-arrow {
+  position: relative;
   width: 44px;
   height: 44px;
   display: inline-grid;
   place-items: center;
-  color: var(--text);
-  font-size: 1.9rem;
-  line-height: 1;
+  overflow: hidden;
+  color: transparent;
+  font-size: 0;
   text-decoration: none;
   cursor: pointer;
 
-  /* remove all movement / rotation */
   transform: none !important;
   animation: none !important;
-  transition: color 220ms ease;
 }
 
-/* remove old pseudo-arrow animation completely */
 .hero-help-arrow::before,
 .hero-help-arrow::after {
   content: none !important;
   display: none !important;
-  transform: none !important;
-  animation: none !important;
 }
 
-/* if your JSX still has arrow span icons, keep only one visible */
 .hero-help-arrow__icon {
-  color: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  transform: none !important;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  font-size: 1.9rem;
+  line-height: 1;
+
+  transform: translate(0, 0) scale(1);
   animation: none !important;
-  transition: none !important;
+
+  transition:
+    transform 420ms ease,
+    opacity 420ms ease,
+    color 220ms ease;
+}
+
+.hero-help-arrow__icon--out {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
 }
 
 .hero-help-arrow__icon--in {
-  display: none !important;
+  opacity: 0;
+  color: #ff3d00;
+  transform: translate(-14px, 16px) scale(0.45);
 }
 
-.hero-help-arrow:hover,
-.hero-help-row:hover .hero-help-arrow {
-  color: #ff3d00;
-  transform: none !important;
-  animation: none !important;
+/* Arrow animation only when hovering the arrow */
+.hero-help-arrow:hover .hero-help-arrow__icon--out {
+  opacity: 0;
+  transform: translate(14px, -16px) scale(0.45);
+}
+
+.hero-help-arrow:hover .hero-help-arrow__icon--in {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
 }
 
 .hero-copy {

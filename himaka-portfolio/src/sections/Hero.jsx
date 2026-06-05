@@ -495,19 +495,19 @@ useEffect(() => {
               <span className="hero-aside__line"></span>
 
               <div className="hero-help-row">
-  <a className="hero-help-link" href="mailto:himakawork@gmail.com">
-    How can I help?
-  </a>
+              <a className="hero-help-link" href="mailto:himakawork@gmail.com">
+              How can I help?
+              </a>
 
-  <a
-    href="mailto:himakawork@gmail.com"
-    className="hero-help-arrow"
-    aria-label="Email Himaka"
-  >
-    <span className="hero-help-arrow__icon hero-help-arrow__icon--out">↗</span>
-    <span className="hero-help-arrow__icon hero-help-arrow__icon--in">↗</span>
-  </a>
-</div>
+              <a
+                href="mailto:himakawork@gmail.com"
+                className="hero-help-arrow"
+                aria-label="Email Himaka"
+              >
+                <span className="hero-help-arrow__icon hero-help-arrow__icon--out">↗</span>
+                <span className="hero-help-arrow__icon hero-help-arrow__icon--in">↗</span>
+              </a>
+            </div>
 
               <p className="hero-copy">
                 I am an undergraduate student pursuing a degree in Information Technology
