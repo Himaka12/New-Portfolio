@@ -471,18 +471,15 @@ useEffect(() => {
             </div>
 
             <div className="hero-headline">
-  <strong>DESIGN</strong>
-  <strong>FOR FINANCE</strong>
+              <strong>DESIGN</strong>
+              <strong>FOR FINANCE</strong>
 
-  <strong className="hero-headline__accent hero-word-slider" aria-label="Technology">
-    <span className="hero-word-slider__track">
-      <span>TECHNOLOGY</span>
-      <span>WEB</span>
-      <span>AUTOMATION</span>
-      <span>TECHNOLOGY</span>
-    </span>
-  </strong>
-</div>
+              <strong className="hero-headline__accent hero-word-reveal" aria-label="Technology">
+                <span className="hero-word-reveal__word hero-word-reveal__word--one">TECHNOLOGY</span>
+                <span className="hero-word-reveal__word hero-word-reveal__word--two">WEB</span>
+                <span className="hero-word-reveal__word hero-word-reveal__word--three">AUTOMATION</span>
+              </strong>
+            </div>
 
             <p className="hero-scroll-note">(Scroll down)</p>
           </div>
