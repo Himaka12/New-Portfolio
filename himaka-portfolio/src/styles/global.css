@@ -737,42 +737,50 @@ button {
   overflow: hidden;
   color: transparent;
   font-size: 0;
+  text-decoration: none;
   cursor: pointer;
 }
 
 .hero-help-arrow::before,
 .hero-help-arrow::after {
-  content: '↗';
+  content: none;
+  display: none;
+}
+
+.hero-help-arrow__icon {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
+  color: var(--text);
   font-size: 1.9rem;
   line-height: 1;
+  transform: translate(0, 0) scale(1);
   transition:
     transform 420ms ease,
     opacity 420ms ease,
     color 220ms ease;
 }
 
-.hero-help-arrow::before {
-  color: var(--text);
+.hero-help-arrow__icon--out {
   opacity: 1;
   transform: translate(0, 0) scale(1);
 }
 
-.hero-help-arrow::after {
+.hero-help-arrow__icon--in {
+  opacity: 0;
   color: #ff3d00;
-  opacity: 0;
-  transform: translate(-18px, 18px) scale(0.55);
+  transform: translate(-14px, 16px) scale(0.45);
 }
 
-.hero-help-row:hover .hero-help-arrow::before {
+.hero-help-row:hover .hero-help-arrow__icon--out,
+.hero-help-arrow:hover .hero-help-arrow__icon--out {
   opacity: 0;
-  transform: translate(18px, -18px) scale(0.55);
+  transform: translate(14px, -16px) scale(0.45);
 }
 
-.hero-help-row:hover .hero-help-arrow::after {
+.hero-help-row:hover .hero-help-arrow__icon--in,
+.hero-help-arrow:hover .hero-help-arrow__icon--in {
   opacity: 1;
   transform: translate(0, 0) scale(1);
 }
