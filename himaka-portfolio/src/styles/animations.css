@@ -7,6 +7,24 @@
   }
 }
 
+@keyframes arrow-orbit {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .marquee__track {
   animation: marquee-scroll 22s linear infinite;
 }
@@ -30,4 +48,15 @@
 .tech-card:hover {
   transform: translateY(-6px);
   border-color: rgba(255, 138, 30, 0.26);
+}
+
+.hero-help-arrow {
+  text-decoration: none;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.hero-help-arrow:hover {
+  color: #ff0000;
+  animation: arrow-orbit 0.8s ease-in-out;
 }

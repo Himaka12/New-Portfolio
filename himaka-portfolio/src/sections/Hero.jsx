@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Code2, Briefcase, Search } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -500,7 +499,7 @@ useEffect(() => {
                   How can I help?
                 </a>
 
-                <span className="hero-help-arrow">&#8599;</span>
+                <a href="mailto:himakawork@gmail.com" className="hero-help-arrow">&#8599;</a>
               </div>
 
               <p className="hero-copy">
@@ -511,38 +510,6 @@ useEffect(() => {
 
             <div className="hero-aside__block">
               <span className="hero-aside__line"></span>
-
-              <div className="hero-social-logos" aria-label="Profile links">
-                <a
-                  className="hero-social-logo"
-                  href="https://www.google.com/search?q=Himaka+Uthpala"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Search Himaka on Google"
-                >
-                  <Search size={18} strokeWidth={2.1} />
-                </a>
-
-                <a
-                  className="hero-social-logo"
-                  href="https://github.com/Himaka12"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub profile"
-                >
-                  <Code2 size={18} strokeWidth={2.1} />
-                </a>
-
-                <a
-                  className="hero-social-logo"
-                  href="https://www.linkedin.com/in/himaka-uthpala-2262633a7"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn profile"
-                >
-                  <Briefcase size={18} strokeWidth={2.1} />
-                </a>
-              </div>
             </div>
           </aside>
         </div>
