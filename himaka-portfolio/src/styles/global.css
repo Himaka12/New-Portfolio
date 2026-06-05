@@ -739,18 +739,33 @@ button {
   font-size: clamp(0.88rem, 0.95vw, 1.02rem);
 }
 
-.hero-awards-mini {
+.hero-social-logos {
   display: flex;
   align-items: center;
-  gap: 24px;
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 0.95rem;
+  gap: 14px;
 }
 
-.hero-award-mark {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.hero-social-logo {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.04);
+  transition:
+    color 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    transform 220ms ease;
+}
+
+.hero-social-logo:hover {
+  color: #ffffff;
+  background: #ff3d00;
+  border-color: #ff3d00;
+  transform: translateY(-4px);
 }
 
 /* ========================================================================

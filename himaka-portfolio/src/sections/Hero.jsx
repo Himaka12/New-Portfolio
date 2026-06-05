@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Github, Linkedin, Search } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -511,11 +512,36 @@ useEffect(() => {
             <div className="hero-aside__block">
               <span className="hero-aside__line"></span>
 
-              <div className="hero-awards-mini">
-                <span className="hero-award-mark">&#9679;</span>
-                <span className="hero-award-mark">Projects</span>
-                <span className="hero-award-mark">UX Thinking</span>
-                <span className="hero-award-mark">ML Builds</span>
+              <div className="hero-social-logos" aria-label="Profile links">
+                <a
+                  className="hero-social-logo"
+                  href="https://www.google.com/search?q=Himaka+Uthpala"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Search Himaka on Google"
+                >
+                  <Search size={18} strokeWidth={2.1} />
+                </a>
+
+                <a
+                  className="hero-social-logo"
+                  href="https://github.com/Himaka12"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub profile"
+                >
+                  <Github size={18} strokeWidth={2.1} />
+                </a>
+
+                <a
+                  className="hero-social-logo"
+                  href="https://www.linkedin.com/in/himaka-uthpala-2262633a7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn profile"
+                >
+                  <Linkedin size={18} strokeWidth={2.1} />
+                </a>
               </div>
             </div>
           </aside>
