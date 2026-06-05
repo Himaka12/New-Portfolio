@@ -666,6 +666,50 @@ button {
   color: #ff5a12;
 }
 
+.hero-word-slider {
+  position: relative;
+  display: inline-block;
+  height: 0.9em;
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.hero-word-slider__track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  animation: heroWordPushUp 10.2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+.hero-word-slider__track span {
+  display: block;
+  height: 0.9em;
+  line-height: 0.9em;
+  white-space: nowrap;
+}
+
+@keyframes heroWordPushUp {
+  0%,
+  18% {
+    transform: translateY(0);
+  }
+
+  28%,
+  46% {
+    transform: translateY(-0.9em);
+  }
+
+  56%,
+  74% {
+    transform: translateY(-1.8em);
+  }
+
+  84%,
+  100% {
+    transform: translateY(-2.7em);
+  }
+}
+
 .hero-scroll-note {
   margin-top: 24px;
   color: rgba(255, 255, 255, 0.52);
