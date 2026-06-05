@@ -762,24 +762,25 @@ button {
 
 .hero-help-arrow::before {
   opacity: 1;
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  transform: translate3d(0, 0, 0);
 }
 
 .hero-help-arrow::after {
   opacity: 0;
   color: #ff3d00;
-  transform: translate3d(-18px, 22px, -70px) rotateX(75deg) rotateY(-35deg);
+  transform: translate3d(-18px, 22px, -70px);
 }
 
 .hero-help-row:hover .hero-help-arrow::before {
   opacity: 0;
-  transform: translate3d(18px, -22px, -70px) rotateX(-75deg) rotateY(35deg);
+  transform: translate3d(18px, -22px, -70px);
 }
 
 .hero-help-row:hover .hero-help-arrow::after {
   opacity: 1;
-  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  transform: translate3d(0, 0, 0);
 }
+
 .hero-copy {
   max-width: 420px;
   margin-top: 92px;
