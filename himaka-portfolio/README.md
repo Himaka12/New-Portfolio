@@ -4,7 +4,7 @@ An original personal portfolio project for **Himaka**, built with **React + Vite
 
 ## Design direction
 
-- Premium dark portfolio
+- Premium portfolio
 - Large bold typography
 - Orange accent color
 - Smooth section flow
